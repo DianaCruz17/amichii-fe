@@ -1,7 +1,7 @@
 function FriendBubble({ friend }) {
   const bgImage = {
-    hasImage: `rounded-full p-18 w-20 h-20 hover:scale-[1.2] transition-all bg-[${friend.bubblepic}]`,
-    noImage: `rounded-full p-18 w-20 h-20 hover:scale-[1.2] transition-all bg-cover bg-center bg-no-repeat`,
+    hasImage: `rounded-full p-18 w-20 h-20  bg-[${friend.bubblepic}]`,
+    noImage: `rounded-full p-18 w-20 h-20  bg-cover bg-center bg-no-repeat`,
   };
 
   const classesToApply = bgImage[friend.bubblepic ? 'hasImage' : 'noImage'];
