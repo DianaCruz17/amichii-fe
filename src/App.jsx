@@ -1,36 +1,30 @@
-import BubbleGrid from './components/friend-bubble/bubble-container';
-import FriendBubble from './components/friend-bubble/friend-bubble';
-import Title from './components/ui/title';
-import { useContext } from 'react';
-import { friendsContext } from './context/friends-context';
-import Carrousel from './components/carrousel';
+import { createBrowserRouter } from 'react-router';
+import { RouterProvider } from 'react-router/dom';
+import HomePage from './pages/HomePage';
+import FriendPage from './pages/FriendPage';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    Component: HomePage,
+  },
+  {
+    path: '/friends/:id',
+    loader: async ({ params }) => {
+      let response = await fetch(
+        'http://localhost:3000/api/friends/' + params.id,
+      );
+      const friend = await response.json();
+      return { friend };
+    },
+    Component: FriendPage,
+  },
+]);
 
 function App() {
-  const { friends } = useContext(friendsContext);
   return (
     <>
-      <Title text='Amichii' size={4} />
-      <div className='p-8'>
-        <div className='grid grid-cols-[3fr_1fr]'>
-          <BubbleGrid
-            items={friends}
-            cols={5}
-            size={128}
-            gap={32}
-            renderItem={(item, i) => (
-              <div className='flex flex-col items-center hover:scale-[1.2] transition-all cursor-pointer'>
-                <FriendBubble friend={item} />
-                <span className='text-center'>
-                  {item.friendname} {item.fatherlastname}
-                </span>
-              </div>
-            )}
-          />
-          <div className='flex justify-end'>
-            <Carrousel />
-          </div>
-        </div>
-      </div>
+      <RouterProvider router={router} />,
     </>
   );
 }

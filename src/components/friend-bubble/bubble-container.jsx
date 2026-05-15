@@ -1,6 +1,6 @@
 function bubblesPositions(count, cols, size, gap) {
   const step = size + gap;
-  const rowOffset = step * (Math.sqrt(3) / 2);
+  const rowOffset = step * (Math.sqrt(3) / 2) + 30;
 
   return Array.from({ length: count }, (_, i) => {
     const col = i % cols;

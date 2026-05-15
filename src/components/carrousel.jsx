@@ -21,7 +21,6 @@ function Carrousel() {
     fetchRandomImages();
   }, []);
 
-  // ✅ Don't render Swiper until photos are loaded
   if (photosData.length === 0) return <p>Loading...</p>;
 
   return (
@@ -29,7 +28,7 @@ function Carrousel() {
       direction='vertical'
       loop={true}
       slidesPerView={3}
-      spaceBetween={4} // ✅ gap between slides in px
+      spaceBetween={4}
       autoplay={{
         delay: 2500,
         disableOnInteraction: false,
@@ -48,9 +47,9 @@ function Carrousel() {
               alt={photo.alt}
               style={{
                 width: 'auto',
-                height: '100%', // ✅ fill the slide, not overflow it
+                height: '100%',
                 objectFit: 'cover',
-                display: 'block', // ✅ removes inline image spacing
+                display: 'block',
               }}
             />
           </div>

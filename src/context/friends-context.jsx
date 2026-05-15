@@ -3,19 +3,36 @@ import { createContext, useState, useEffect } from 'react';
 export const friendsContext = createContext({});
 
 function FriendsProvider({ children }) {
+  // state (VARIABLES)
   const [friends, setFriends] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
+  // use effect
+  useEffect(() => {
+    fetchAllFriends();
+  }, []);
+
+  // functions
   async function fetchAllFriends() {
     const response = await fetch('http://localhost:3000/api/friends');
     const data = await response.json();
     setFriends(data);
   }
+  function closeModal() {
+    setIsOpen(false);
+  }
 
-  useEffect(() => {
-    fetchAllFriends();
-  }, []);
+  function openModal() {
+    setIsOpen(true);
+  }
 
-  const valueToShare = { friends };
+  const valueToShare = {
+    friends,
+    closeModal,
+    isOpen,
+    openModal,
+    fetchAllFriends,
+  };
 
   return (
     <friendsContext.Provider value={valueToShare}>
