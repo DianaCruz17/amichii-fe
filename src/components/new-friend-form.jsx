@@ -171,22 +171,31 @@ function NewFriendForm() {
           <ErrorMessage> {errors.phoneNumber?.message} </ErrorMessage>
         )}
         <label htmlFor='horoscopesign'>Horoscope</label>
-        <input
+        <select
           name='horoscopesign'
-          className='border rounded-lg w-60  border-sky-600 px-2 '
-          type='text'
+          id='horoscopesign'
+          className='border rounded-lg w-60 border-sky-600 px-2 py-1 bg-white'
           {...register('horoscopesign', {
             required: {
               value: true,
               message: 'Horoscope sign is required',
             },
-            minLength: {
-              value: 3,
-              message: 'Horoscope must have 3 characters at least',
-            },
           })}
-          placeholder='Piscis'
-        />
+        >
+          <option value=''>-- Select your sign --</option>
+          <option value='Aries'>♈ Aries</option>
+          <option value='Tauro'>♉ Tauro</option>
+          <option value='Géminis'>♊ Géminis</option>
+          <option value='Cáncer'>♋ Cáncer</option>
+          <option value='Leo'>♌ Leo</option>
+          <option value='Virgo'>♍ Virgo</option>
+          <option value='Libra'>♎ Libra</option>
+          <option value='Escorpio'>♏ Escorpio</option>
+          <option value='Sagitario'>♐ Sagitario</option>
+          <option value='Capricornio'>♑ Capricornio</option>
+          <option value='Acuario'>♒ Acuario</option>
+          <option value='Piscis'>♓ Piscis</option>
+        </select>
         {errors.horoscopesign && (
           <ErrorMessage> {errors.horoscopesign?.message}</ErrorMessage>
         )}
