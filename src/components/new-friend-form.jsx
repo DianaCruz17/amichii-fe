@@ -4,7 +4,28 @@ import toast from 'react-hot-toast';
 import { useContext } from 'react';
 import { friendsContext } from '../context/friends-context';
 
-function NewFriendForm() {
+function NewFriendForm({ friendData }) {
+  if (friendData) {
+    const recalculateStructure = []; // para sacar los datos de un objeto en el edit se usa el for in, posteriormente se regresa a un arreglo con .push
+
+    for (let network in friendData.socialnetworks) {
+      recalculateStructure.push({
+        key: network,
+        value: friendData.socialnetworks[network],
+      });
+    }
+
+    friendData = {
+      ...friendData,
+      hobbies: friendData.hobbies?.map((h) => {
+        // para sacar los datos de un arreglo se uso el map que devuelve un arreglo
+        return { value: h };
+      }),
+      socialNetworks: [...recalculateStructure],
+    };
+  }
+
+  console.log('FRIEND DATA', friendData);
   const {
     register,
     handleSubmit,
@@ -12,12 +33,14 @@ function NewFriendForm() {
     formState: { errors },
   } = useForm({
     defaultValues: {
+      ...friendData,
+    } ?? {
       hobbies: [{ value: '' }],
       socialNetworks: [{ key: '', value: '' }],
     },
   });
 
-  const { closeModal, fetchAllFriends } = useContext(friendsContext);
+  const { closeModal, fetchAllFriends, mode } = useContext(friendsContext);
 
   const hobbiesField = useFieldArray({ control, name: 'hobbies' });
   const socialsField = useFieldArray({ control, name: 'socialNetworks' });
@@ -31,8 +54,14 @@ function NewFriendForm() {
         return acc;
       }, {}),
     };
-    const response = await fetch('http://localhost:3000/api/friends', {
-      method: 'POST',
+
+    const endPointUrl =
+      mode === 'edit'
+        ? 'http://localhost:3000/api/friends/' + friendData.id
+        : 'http://localhost:3000/api/friends';
+
+    const response = await fetch(endPointUrl, {
+      method: mode === 'edit' ? 'PUT' : 'POST',
       headers: {
         'Content-type': 'application/json',
       },
@@ -40,8 +69,9 @@ function NewFriendForm() {
     });
 
     const beResponse = await response.json();
-    if (response.status === 201) {
+    if (response.status === 200 || response.status === 201) {
       toast.success(beResponse.message);
+      closeModal();
       fetchAllFriends();
     } else {
       toast.error(beResponse.message);
@@ -118,8 +148,8 @@ function NewFriendForm() {
           })}
           placeholder='López'
         />
-        {errors.mothersLastName && (
-          <ErrorMessage>{errors.mothersLastName?.message} </ErrorMessage>
+        {errors.motherlastname && (
+          <ErrorMessage>{errors.motherlastname?.message} </ErrorMessage>
         )}
 
         <label htmlFor='birthday'>Birthdate</label>

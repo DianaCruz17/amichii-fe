@@ -4,10 +4,11 @@ import { Trash2, Pencil } from 'lucide-react';
 import Modal from '../components/ui/modal';
 import { useContext } from 'react';
 import { friendsContext } from '../context/friends-context';
+import NewFriendForm from '../components/new-friend-form';
 
 function FriendPage() {
   let { friend } = useLoaderData();
-  const { openModal } = useContext(friendsContext);
+  const { openModal, mode } = useContext(friendsContext);
 
   return (
     <div className='flex h-screen w-full items-center justify-center '>
@@ -61,9 +62,7 @@ function FriendPage() {
           <Pencil onClick={() => openModal('edit')} />
         </div>
       </div>
-      <Modal>
-        <div>Hola soy el modal prrou!</div>
-      </Modal>
+      <Modal>{mode === 'edit' && <NewFriendForm friendData={friend} />}</Modal>
     </div>
   );
 }

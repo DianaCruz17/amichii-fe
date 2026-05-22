@@ -6,6 +6,7 @@ function FriendsProvider({ children }) {
   // state (VARIABLES)
   const [friends, setFriends] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [mode, setMode] = useState('create');
 
   // use effect
   useEffect(() => {
@@ -22,7 +23,8 @@ function FriendsProvider({ children }) {
     setIsOpen(false);
   }
 
-  function openModal() {
+  function openModal(mode = 'create') {
+    setMode(mode);
     setIsOpen(true);
   }
 
@@ -32,6 +34,7 @@ function FriendsProvider({ children }) {
     isOpen,
     openModal,
     fetchAllFriends,
+    mode,
   };
 
   return (
