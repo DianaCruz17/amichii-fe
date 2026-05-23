@@ -6,6 +6,7 @@ import FriendPage from './pages/FriendPage';
 const router = createBrowserRouter([
   {
     path: '/',
+    HydrateFallback: () => null,
     Component: HomePage,
   },
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       const friend = await response.json();
       return { friend };
     },
+    HydrateFallback: () => null,
     Component: FriendPage,
   },
 ]);

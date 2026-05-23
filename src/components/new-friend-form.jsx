@@ -204,7 +204,7 @@ function NewFriendForm({ friendData }) {
         <select
           name='horoscopesign'
           id='horoscopesign'
-          className='border rounded-lg w-60 border-sky-600 px-2 py-1 bg-white'
+          className='border rounded-lg w-60 border-sky-600 px-2 py-1 bg-orange-50'
           {...register('horoscopesign', {
             required: {
               value: true,
@@ -212,19 +212,21 @@ function NewFriendForm({ friendData }) {
             },
           })}
         >
-          <option value=''>-- Select your sign --</option>
-          <option value='Aries'>♈ Aries</option>
-          <option value='Tauro'>♉ Tauro</option>
-          <option value='Géminis'>♊ Géminis</option>
-          <option value='Cáncer'>♋ Cáncer</option>
-          <option value='Leo'>♌ Leo</option>
-          <option value='Virgo'>♍ Virgo</option>
-          <option value='Libra'>♎ Libra</option>
-          <option value='Escorpio'>♏ Escorpio</option>
-          <option value='Sagitario'>♐ Sagitario</option>
-          <option value='Capricornio'>♑ Capricornio</option>
-          <option value='Acuario'>♒ Acuario</option>
-          <option value='Piscis'>♓ Piscis</option>
+          <option className='bg-orange-50 ' value=''>
+            -- Select your sign --
+          </option>
+          <option value='♈ Aries'>♈ Aries</option>
+          <option value='♉ Tauro'>♉ Tauro</option>
+          <option value='♊ Géminis'>♊ Géminis</option>
+          <option value='♋ Cáncer'>♋ Cáncer</option>
+          <option value='♌ Leo'>♌ Leo</option>
+          <option value='♍ Virgo'>♍ Virgo</option>
+          <option value='♎ Libra'>♎ Libra</option>
+          <option value='♏ Escorpio'>♏ Escorpio</option>
+          <option value='♐ Sagitario'>♐ Sagitario</option>
+          <option value='♑ Capricornio'>♑ Capricornio</option>
+          <option value='♒ Acuario'>♒ Acuario</option>
+          <option value='♓ Piscis'>♓ Piscis</option>
         </select>
         {errors.horoscopesign && (
           <ErrorMessage> {errors.horoscopesign?.message}</ErrorMessage>

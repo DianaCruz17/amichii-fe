@@ -8,20 +8,20 @@ import NewFriendForm from '../components/new-friend-form';
 
 function FriendPage() {
   let { friend } = useLoaderData();
-  const { openModal, mode } = useContext(friendsContext);
+  const { openModal, mode, deleteFriend } = useContext(friendsContext);
 
   return (
     <div className='flex h-screen w-full items-center justify-center '>
       <div className='grid h-full w-full gap-8 bg-sky-800 p-2 grid-cols-12 grid-rows-5 rounded-lg shadow-md px-12 py-8'>
-        <div className='col-span-3 row-span-1 flex items-center justify-between relative rounded-[35px] bg-[#ffffff] shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0]'>
-          <p className='flex w-full items-center justify-around text-2xl  text-sky-700'>
-            <span className='text-4xl'>📱 </span>
-            {friend.phonenumber}
+        <div className='col-span-3 row-span-1 flex items-center justify-around relative rounded-[35px] bg-[#ffffff] shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0]'>
+          <p className='flex w-full min-w-0 items-center justify-around gap-2 px-3 text-2xl text-sky-700'>
+            <span className='shrink-0'>📱</span>
+            <span className='truncate'>{friend.phonenumber}</span>
           </p>
         </div>
-        <div className='col-span-3 row-span-1 flex row-start-2 items-center justify-center relative rounded-[35px] bg-[#f1f8fe] shadow-[inset_13px_13px_25px_#dbe2e7,inset_-13px_-13px_25px_#ffffff]'>
-          <p className='flex w-full items-center justify-around text-2xl  text-sky-700'>
-            <span className='text-4xl text-gray-600'>🎂 </span>
+        <div className='col-span-3 row-span-1 flex row-start-2 items-center justify-around relative rounded-[35px] bg-[#ffffff] shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0]'>
+          <p className='flex w-full min-w-0 items-center justify-around gap-2 px-3 text-2xl text-sky-700'>
+            <span className='text-auto shrink-0'>🎂 </span>
             {friend.birthday}
           </p>
         </div>
@@ -44,15 +44,20 @@ function FriendPage() {
 
         <div className='col-span-3 row-span-2 flex col-start-10 items-center justify-center relative rounded-[35px] bg-[#ffffff] shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0]'>
           <p className='flex gap-2 flex-wrap  '>
-            {' '}
-            {friend.hobbies?.map((hobby) => (
-              <Badge>{hobby}</Badge>
+            {friend.hobbies?.map((hobby, i) => (
+              <Badge key={i}>{hobby}</Badge>
             ))}
           </p>
         </div>
         <div className='col-span-3 row-span-2 col-start-10  flex items-center justify-center relative rounded-[35px] bg-[#ffffff] shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0]'>
           {' '}
-          <p>instagram </p>
+          <p>
+            {Object.entries(friend.socialnetworks)?.map(([network, value]) => (
+              <Badge key={network}>
+                {network}: {value}
+              </Badge>
+            ))}
+          </p>
         </div>
         <div className='col-span-1 col-start-11 row-start-5 flex items-center justify-center hover:text-sky-50 '>
           <Trash2 onClick={() => openModal('delete')} />
@@ -62,7 +67,12 @@ function FriendPage() {
           <Pencil onClick={() => openModal('edit')} />
         </div>
       </div>
-      <Modal>{mode === 'edit' && <NewFriendForm friendData={friend} />}</Modal>
+      <Modal>
+        {mode === 'edit' && <NewFriendForm friendData={friend} />}
+        {mode === 'delete' && (
+          <button onClick={() => deleteFriend(friend.id)}>Yes</button>
+        )}
+      </Modal>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 export const friendsContext = createContext({});
 
@@ -28,6 +29,21 @@ function FriendsProvider({ children }) {
     setIsOpen(true);
   }
 
+  async function deleteFriend(id) {
+    const response = await fetch('http://localhost:3000/api/friends/' + id, {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+      },
+    });
+    const data = await response.json();
+    if (response.status === 200) {
+      toast.success(data.message);
+    } else {
+      toast.error(data.message);
+    }
+  }
+
   const valueToShare = {
     friends,
     closeModal,
@@ -35,6 +51,7 @@ function FriendsProvider({ children }) {
     openModal,
     fetchAllFriends,
     mode,
+    deleteFriend,
   };
 
   return (
