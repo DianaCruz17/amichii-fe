@@ -39,6 +39,7 @@ function FriendsProvider({ children }) {
     const data = await response.json();
     if (response.status === 200) {
       toast.success(data.message);
+      closeModal();
     } else {
       toast.error(data.message);
     }
