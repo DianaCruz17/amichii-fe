@@ -162,24 +162,11 @@ function NewFriendForm({ friendData }) {
               value: true,
               message: 'Birthdate is required',
             },
-            // validate: (value) => {
-            //   const birthDate = new Date(value);
-            //   const currentDate = new Date();
-            //   const edad = currentDate.getFullYear() - birthDate.getFullYear();
-            //   if (edad >= 18) {
-            //     return true;
-            //   } else {
-            //     return 'Debe ser mayor de 18 años';
-            //   }
-            // },
           })}
         />
         {errors.birthday && (
           <ErrorMessage>{errors.birthday?.message}</ErrorMessage>
         )}
-      </div>
-
-      <div className='flex flex-col gap-2'>
         <label htmlFor='phonenumber'>Phone</label>
         <input
           name='phonenumber'
@@ -200,6 +187,9 @@ function NewFriendForm({ friendData }) {
         {errors.phoneNumber && (
           <ErrorMessage> {errors.phoneNumber?.message} </ErrorMessage>
         )}
+      </div>
+
+      <div className='flex flex-col gap-2'>
         <label htmlFor='horoscopesign'>Horoscope</label>
         <select
           name='horoscopesign'
@@ -231,13 +221,45 @@ function NewFriendForm({ friendData }) {
         {errors.horoscopesign && (
           <ErrorMessage> {errors.horoscopesign?.message}</ErrorMessage>
         )}
+
+        <label htmlFor='lastcontact'>Last Contact Date</label>
+        <input
+          name='lastcontact'
+          className='border  rounded-lg w-60  border-sky-600 px-2 cursor-pointer'
+          type='date'
+          {...register('lastcontact', {
+            required: {
+              value: true,
+              message: 'lastcontact ',
+            },
+          })}
+        />
+        {errors.lastcontact && (
+          <ErrorMessage>{errors.lastcontact?.message}</ErrorMessage>
+        )}
+        <label htmlFor='notes'>Notes about last contact</label>
+        <input
+          className='border rounded-lg  w-60  border-sky-600 px-2 '
+          type='text'
+          name='notes'
+          {...register('notes', {
+            required: { value: true, message: 'notes is required' },
+            minLength: {
+              value: 3,
+              message: 'notes must have 3 characters at least',
+            },
+          })}
+          placeholder='i saw her in italian restaurant'
+        />
+        {errors.notes && <ErrorMessage>{errors.notes?.message} </ErrorMessage>}
+
         <label>Hobbies</label>
         {hobbiesField.fields.map((field, i) => (
           <div key={field.id}>
             <div className='flex gap-2'>
               <input
                 name='hobbies'
-                className='border rounded-lg w-60 border-sky-600 px-2'
+                className='border ounded-lg w-60 border-sky-600 px-2'
                 placeholder='ej. programar'
                 {...register(`hobbies.${i}.value`, {
                   required: { value: true, message: 'Hobby is required' },

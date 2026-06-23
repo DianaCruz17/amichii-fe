@@ -5,20 +5,25 @@ import { useEffect, useState } from 'react';
 import { Mousewheel, Navigation, Autoplay } from 'swiper/modules';
 
 function Carrousel() {
-  const API_KEY = 'N9yAvb0IaZYPHdpKPk52Z1fql7hajk6AsbNdl1f1W4sLHQhPGYsAgCz6';
   const [photosData, setPhotos] = useState([]);
 
-  async function fetchRandomImages() {
-    const response = await fetch(
-      'https://api.pexels.com/v1/search?query=nature&per_page=20',
-      { headers: { Authorization: API_KEY } },
-    );
+  // async function fetchRandomImages() {
+  //   const response = await fetch(
+  //     'https://api.pexels.com/v1/search?query=nature&per_page=20',
+  //     { headers: { Authorization: API_KEY } },
+  //   );
+  //   const data = await response.json();
+  //   setPhotos(data.photos);
+  // }
+  async function fetchDataBaseImages() {
+    const response = await fetch('http://localhost:3000/api/carrousel');
     const data = await response.json();
     setPhotos(data.photos);
+    console.log(response, 'response', data);
   }
 
   useEffect(() => {
-    fetchRandomImages();
+    fetchDataBaseImages();
   }, []);
 
   if (photosData.length === 0) return <p>Loading...</p>;

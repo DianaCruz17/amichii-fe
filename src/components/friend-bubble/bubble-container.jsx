@@ -1,6 +1,8 @@
+import React from 'react';
+
 function bubblesPositions(count, cols, size, gap) {
   const step = size + gap;
-  const rowOffset = step * (Math.sqrt(3) / 2) + 30;
+  const rowOffset = step * (Math.sqrt(3) / 2) + 40;
 
   return Array.from({ length: count }, (_, i) => {
     const col = i % cols;
@@ -8,7 +10,7 @@ function bubblesPositions(count, cols, size, gap) {
     const isOddRow = row % 2 === 1;
 
     return {
-      x: col * step + (isOddRow ? step / 2 : 0),
+      x: col * step + (isOddRow ? step / 4 : 0),
       y: row * rowOffset,
     };
   });

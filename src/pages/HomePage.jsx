@@ -17,7 +17,7 @@ function HomePage() {
       <Title text='Amichii' size={4} />
 
       <div className='p-8'>
-        <div className='grid grid-cols-[3fr_1fr]'>
+        <div className='grid grid-cols-[3fr_1fr] ml-30 mr-20'>
           <BubbleGrid
             items={friends}
             cols={5}

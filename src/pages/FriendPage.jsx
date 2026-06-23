@@ -20,105 +20,162 @@ function FriendPage() {
   const { openModal, mode, deleteFriend, closeModal } =
     useContext(friendsContext);
 
+  const formatDateFromTimestamp = (lastcontact) => {
+    if (!lastcontact) return 'No date';
+    const date = new Date(lastcontact);
+
+    return date.toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
+  };
+  function ChangeColorAlert() {}
+
   return (
-    <div className='flex h-screen w-full items-center justify-center '>
-      <div className='grid h-full w-full gap-8 bg-sky-100 p-2 grid-cols-12 grid-rows-6 rounded-lg shadow-md px-12 py-8'>
-        <div className=' col-span-12 text-3xl text-blue-50 justify-center text-center items-center'>
-          {' '}
-          <h>FRIEND PAGE</h>
-        </div>
-        <div className='col-span-4 row-span-2 row-start-2 col-start-3 items-center justify-center relative rounded-[15px] bg-[#ffffff] shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0] grid grid-rows-2'>
-          <section className='mt-15'>
-            {' '}
-            <FriendBubble friend={friend} />
-          </section>
-          <p className='flex w-full items-center  text-xl  text-sky-700'>
-            {friend.friendname} {friend.fatherlastname} {friend.motherlastname}
-          </p>
-        </div>
+    <div className='min-h-screen w-full bg-sky-100 px-4 py-6 flex items-start justify-center'>
+      <div className='w-full max-w-7xl rounded-[32px] bg-sky-100 p-4 shadow-md sm:p-8'>
+        <div className='grid gap-6'>
+          <div className='text-center text-3xl font-semibold text-sky-400'>
+            FRIEND PAGE
+          </div>
 
-        <div className='grid grid-cols-2 gap-4 col-span-4 row-span-2 row-start-4 col-start-3 items-center relative rounded-[15px] bg-[#ffffff] shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0] p-6'>
-          <span className='flex items-center justify-end gap-2 text-sky-400'>
-            <Cake size={16} />
-            Birthday
-          </span>
-          <span className='text-left text-sky-700'>{friend.birthday}</span>
-          <span className='flex items-center justify-end gap-2 text-sky-400'>
-            <Smartphone size={16} /> Phone Number{' '}
-          </span>
-          <span className='text-left text-sky-700 truncate'>
-            {friend.phonenumber}
-          </span>
-          <span className='flex items-center justify-end gap-2 text-sky-400'>
-            {' '}
-            <ZodiacOphiuchus size={16} /> Horoscope sign
-          </span>
-          <span className='text-left text-sky-700'>{friend.horoscopesign}</span>
-        </div>
-        <div className='col-span-4 col-start-7 row-start-2 flex flex-col items-start justify-center gap-2 relative rounded-[15px] bg-[#ffffff] shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0] p-5'>
-          <p className='flex items-center gap-2 text-sky-700'>
-            <BellRing size={16} />
-            Last Contact
-          </p>
-          <p className='font-medium text-sm text-gray-800'>
-            Days ago ¡contact your friend!
-          </p>
-        </div>
+          <div className='grid gap-6 lg:grid-cols-[280px_1fr]'>
+            <div className='rounded-[15px] bg-white p-6 shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0]'>
+              <div className='flex flex-col items-center justify-center gap-4 text-center'>
+                <FriendBubble friend={friend} />
+                <p className='text-xl font-medium text-sky-700'>
+                  {friend.friendname} {friend.fatherlastname}{' '}
+                  {friend.motherlastname}
+                </p>
+              </div>
+            </div>
 
-        <div className='col-span-4 col-start-7 row-start-3 row-span-2 flex flex-col gap-3 relative rounded-[15px] bg-[#ffffff] shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0] p-5'>
-          <p className='font-medium text-sm flex items-center gap-1.5 text-sky-700'>
-            <Heart size={16} />
-            Hobbies
-          </p>
-          <div className='flex gap-2 flex-wrap'>
-            {friend.hobbies?.map((hobby, i) => (
-              <Badge
-                key={i}
-                className='bg-blue-100 text-blue-700 text-xs px-3 py-1.5 rounded-md font-normal'
+            <div className='grid gap-6 col start'>
+              <div className='grid gap-6 md:grid-cols-2'>
+                <div className='grid grid-cols-1 gap-4 rounded-[15px] bg-white p-6 shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0]'>
+                  <div className='flex items-center justify-between gap-2 text-sky-400'>
+                    <span className='flex items-center gap-2'>
+                      <Cake size={16} />
+                      Birthday
+                    </span>
+                    <span className='text-sky-700'>{friend.birthday}</span>
+                  </div>
+                  <div className='flex items-center justify-between gap-2 text-sky-400'>
+                    <span className='flex items-center gap-2'>
+                      <Smartphone size={16} /> Phone
+                    </span>
+                    <span className='text-sky-700 break-all'>
+                      {friend.phonenumber}
+                    </span>
+                  </div>
+                  <div className='flex items-center justify-between gap-2 text-sky-400'>
+                    <span className='flex items-center gap-2'>
+                      <ZodiacOphiuchus size={16} /> Horoscope
+                    </span>
+                    <span className='text-sky-700'>{friend.horoscopesign}</span>
+                  </div>
+                </div>
+
+                <div className='rounded-[15px] bg-white p-5 shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0]'>
+                  <p className='mb-3 flex items-center gap-1.5 text-sm font-medium text-sky-700'>
+                    <Heart size={16} /> Hobbies
+                  </p>
+                  <div className='flex flex-wrap gap-2'>
+                    {friend.hobbies?.map((hobby, i) => (
+                      <Badge
+                        key={i}
+                        className='bg-blue-100 text-blue-700 text-xs px-3 py-1.5 rounded-md font-normal'
+                      >
+                        {hobby}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className='grid gap-6 md:grid-cols-2'>
+                <div className='rounded-[15px] bg-white p-5 shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0]'>
+                  <p className='mb-3 flex flex-wrap items-center gap-2 text-sky-700'>
+                    Notes
+                  </p>
+                  <p className='text-sm leading-6 text-slate-700'>
+                    {friend.notes ? friend.notes : 'No notes available.'}
+                  </p>
+                </div>
+
+                <div className='rounded-[15px] bg-white p-5 shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0]'>
+                  <p className='mb-3 flex flex-wrap items-center gap-2 text-sky-700'>
+                    <ContactRound size={16} /> Social Networks
+                  </p>
+                  <div className='flex flex-wrap gap-2'>
+                    {Object.entries(friend.socialnetworks || {}).map(
+                      ([network, value]) => (
+                        <Badge
+                          key={network}
+                          className='bg-slate-100 text-slate-700'
+                        >
+                          {network}: {value}
+                        </Badge>
+                      ),
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='rounded-[15px] bg-white p-5 shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0] w-70 mr-auto'>
+            <div className='flex flex-col gap-4 '>
+              <div className='items-center grid grid-rows-2 gap-2 text-sky-700 '>
+                <span className='flex items-center gap-2'>
+                  <BellRing size={16} /> Last Contact
+                </span>
+                <span>{formatDateFromTimestamp(friend.lastcontact)}</span>
+              </div>
+              <p className='text-sm font-medium text-gray-800'>
+                Days ago ¡contact your friend!
+              </p>
+              <button className='mt-2 inline-flex items-center justify-center rounded-lg bg-orange-200 px-4 py-2 text-sm text-sky-700 transition hover:bg-orange-300'>
+                Call
+              </button>
+            </div>
+          </div>
+
+          <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
+            <div className='flex flex-wrap items-center justify-center gap-2 text-sky-700'></div>
+            <div className='flex flex-wrap justify-center gap-3'>
+              <button
+                className='inline-flex items-center justify-center rounded-2xl bg-white px-4 py-2 text-sky-700 shadow-sm transition hover:bg-orange-100'
+                onClick={() => openModal('delete')}
               >
-                {hobby}
-              </Badge>
-            ))}
+                <Trash2 className='mr-2' /> Delete
+              </button>
+              <button
+                className='inline-flex items-center justify-center rounded-2xl bg-white px-4 py-2 text-sky-700 shadow-sm transition hover:bg-orange-100'
+                onClick={() => openModal('edit')}
+              >
+                <Pencil className='mr-2' /> Edit
+              </button>
+            </div>
           </div>
         </div>
-        <div className='col-span-4 row-span-1 col-start-7 row-start-5 flex items-center justify-center relative rounded-[15px] bg-[#ffffff] shadow-[inset_5px_5px_10px_#f2e7da,inset_-5px_-5px_10px_#fffff0]'>
-          {' '}
-          <p className='flex items-center gap-2 text-sky-700'>
-            <ContactRound size={16} />
-            SocialNetworks
-          </p>
-          <p>
-            {Object.entries(friend.socialnetworks)?.map(([network, value]) => (
-              <Badge key={network}>
-                {network}: {value}
-              </Badge>
-            ))}
-          </p>
-        </div>
-
-        <div className='col-span-1 col-start-8 row-start-6 flex items-center justify-center hover:text-sky-50 cursor-pointer'>
-          <Trash2 onClick={() => openModal('delete')} />
-        </div>
-        <div className='col-span-1 col-start-9 row-start-6 flex items-center justify-center hover:text-sky-50 cursor-pointer'>
-          {' '}
-          <Pencil onClick={() => openModal('edit')} />
-        </div>
       </div>
+
       <Modal>
         {mode === 'edit' && <NewFriendForm friendData={friend} />}
         {mode === 'delete' && (
-          <div className='grid grid-cols-2 justify-items-center h-50  content-center'>
+          <div className='grid grid-cols-2 justify-items-center h-50 content-center gap-4'>
             <button
-              className='border-amber-600 w-30 rounded-2xl bg-orange-300 h-10 hover:bg-amber-600 cursor-pointer'
+              className='w-30 rounded-2xl bg-orange-300 px-4 py-2 text-slate-800 transition hover:bg-amber-600'
               onClick={() => deleteFriend(friend.id)}
             >
               Yes
             </button>
             <button
-              className='border-amber-600 w-30 rounded-2xl bg-orange-300 h-10 hover:bg-amber-600 cursor-pointer '
+              className='w-30 rounded-2xl bg-orange-300 px-4 py-2 text-slate-800 transition hover:bg-amber-600'
               onClick={() => closeModal()}
             >
-              No{' '}
+              No
             </button>
           </div>
         )}
