@@ -18,7 +18,7 @@ function Carrousel() {
   async function fetchDataBaseImages() {
     const response = await fetch('http://localhost:3000/api/carrousel');
     const data = await response.json();
-    setPhotos(data.photos);
+    setPhotos(data);
     console.log(response, 'response', data);
   }
 
@@ -48,8 +48,7 @@ function Carrousel() {
         <SwiperSlide key={photo.id}>
           <div className='w-55 h-auto'>
             <img
-              src={photo.src.large}
-              alt={photo.alt}
+              src={photo.imagen}
               style={{
                 width: 'auto',
                 height: '100%',

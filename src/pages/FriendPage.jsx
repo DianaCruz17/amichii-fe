@@ -2,7 +2,7 @@ import { useLoaderData } from 'react-router';
 import Badge from '../components/ui/badge';
 import { Trash2, Pencil } from 'lucide-react';
 import Modal from '../components/ui/modal';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { friendsContext } from '../context/friends-context';
 import NewFriendForm from '../components/new-friend-form';
 import FriendBubble from '../components/friend-bubble/friend-bubble';
@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 
 function FriendPage() {
+  const [elapsedDays, setElapsedDays] = useState(0);
+  const [colorButton, setColorButton] = useState('bg-green-800');
   let { friend } = useLoaderData();
   const { openModal, mode, deleteFriend, closeModal } =
     useContext(friendsContext);
@@ -30,7 +32,24 @@ function FriendPage() {
       year: 'numeric',
     });
   };
-  function ChangeColorAlert() {}
+  function ChangeColorAlert() {
+    const dateToCompare = new Date(formatDateFromTimestamp(friend.lastcontact));
+    const today = new Date();
+    const mili = today - dateToCompare;
+    const miliSecondsPerDay = 86400000;
+    const calculatedDays = Math.floor(mili / miliSecondsPerDay);
+    console.log(calculatedDays);
+    setElapsedDays(calculatedDays);
+
+    if (calculatedDays > 30) {
+      setColorButton('bg-red-900');
+    } else if (calculatedDays > 15) {
+      setColorButton('bg-amber-200');
+    } else setColorButton('bg-green-800');
+  }
+  useEffect(() => {
+    ChangeColorAlert();
+  }, []);
 
   return (
     <div className='min-h-screen w-full bg-sky-100 px-4 py-6 flex items-start justify-center'>
@@ -133,9 +152,11 @@ function FriendPage() {
                 <span>{formatDateFromTimestamp(friend.lastcontact)}</span>
               </div>
               <p className='text-sm font-medium text-gray-800'>
-                Days ago ¡contact your friend!
+                {elapsedDays} Days ago ¡contact your friend!
               </p>
-              <button className='mt-2 inline-flex items-center justify-center rounded-lg bg-orange-200 px-4 py-2 text-sm text-sky-700 transition hover:bg-orange-300'>
+              <button
+                className={`${colorButton} mt-2 inline-flex items-center justify-center rounded-lg `}
+              >
                 Call
               </button>
             </div>
