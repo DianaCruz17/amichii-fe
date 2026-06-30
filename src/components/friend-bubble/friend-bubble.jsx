@@ -3,7 +3,7 @@ function FriendBubble({ friend }) {
 
   const imageUrl = friend.bubblepic
     ? friend.bubblepic
-    : `https://ui-avatars.com/api/?name=${encodeURIComponent(friend.friendname)}+${encodeURIComponent(friend.fatherlastname)}&background=93c5fd&color=ffffff&size=128`;
+    : `https://ui-avatars.com/api/?name=${encodeURIComponent(friend.friendname)}+${encodeURIComponent(friend.fatherlastname)}&background=e16c00&color=&size=128`;
 
   return (
     <div

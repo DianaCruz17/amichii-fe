@@ -46,7 +46,7 @@ function Carrousel() {
     >
       {photosData.map((photo) => (
         <SwiperSlide key={photo.id}>
-          <div className='w-55 h-auto'>
+          <div className='w-65 h-auto'>
             <img
               src={photo.imagen}
               style={{
